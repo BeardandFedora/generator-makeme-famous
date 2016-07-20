@@ -1,0 +1,71 @@
+{
+    "name": "<%= utils._.snakeCase(appname) %>",
+    "description": "<%= utils._.snakeCase(appname) %>",
+    "version": "0.0.1",
+    "license": "UNLICENSED",
+    "scripts": {
+        "test": "gulp test",
+        "jsbeautify": "js-beautify <%=clientFolder%>/**/*.js <%=clientFolder%>/*.js -r",
+        "protractor_debug_1": "./node_modules/protractor/bin/webdriver-manager start",
+        "protractor_debug_2": "./node_modules/protractor/bin/elementexplorer.js http://localhost:5000"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "dependencies": {
+        "angular": "^1.4.6",
+        "angular-animate": "^1.4.6",
+        "angular-mocks": "^1.4.6",
+        "angular-resource": "^1.4.6",
+        "angular-sanitize": "^1.4.6",
+        "angular-ui-router": "^0.2.15"<% if (ionic) { %>,
+        "ionic-sdk":"^1.1.0"<% } %><% if (fontawesome) { %>,
+        "font-awesome": "^4.4.0"<% } %><% if (famous) { %>,
+        "famous": "^0.3.5",
+        "famous-polyfills": "^0.3.0"<% } %><% if (ngCordova) { %>,
+        "ng-cordova": "^0.1.23-alpha"<% } %><% if (bootstrap) { %>,
+        "angular-ui-bootstrap": "^0.14.3"<% } %><% if (material) { %>,
+        "angular-material": "^0.11.0"<% } %><% if (bootstrap) { %>,
+        "bootstrap": "3.3.5"<% } %>
+    },
+    "devDependencies": {
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "browser": {
+        "unitHelper": "./test/unit/unitHelper.js",
+        "lbServices": "./<%=clientFolder%>/scripts/lbServices.js"<% if (ionic) { %>,
+        "ionic": "ionic-sdk/release/js/ionic.js",
+        "ionic-angular": "ionic-sdk/release/js/ionic-angular.js"<% } %><% if (famous) { %>,
+        "famous-angular": "./bower_components/famous-angular/dist/famous-angular.js"<% } %>
+    },
+    "browserify": {
+        "transform": [
+            ["babelify", { "stage": 0, "optional": ["es7.asyncFunctions", "runtime"], "ignore": ["./node_modules", "./bower_components"]}],
+            "html2js-browserify",
+            "cssify",
+            "browserify-shim",
+            "brfs"
+        ]
+    },
+    "browserify-shim": {
+        "lbServices": {
+            "depends": [
+            "angular-resource"
+            ]
+        }<% if (famous) { %>,
+        "famous-angular": {
+            "depends": [
+              "famous-polyfills",
+              "famous:famous",
+              "angular",
+              "angular-animate",
+              "angular-sanitize",
+              "angular-ui-router"
+          ]
+        }<% } %>
+
+    }
+}
